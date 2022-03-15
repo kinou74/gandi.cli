@@ -20,8 +20,8 @@ def disk(gandi):
 
 
 @disk.command()
-@click.option('--only-data', help='Only display data disks.', is_flag=True)
-@click.option('--only-snapshot', help='Only display snapshots.', is_flag=True)
+@click.option('--only-data', '--data-only', help='Only display data disks.', is_flag=True)
+@click.option('--only-snapshot', '--snapshot-only', help='Only display snapshots.', is_flag=True)
 @click.option('--attached', help='Only display disks attached to a VM',
               is_flag=True)
 @click.option('--detached', help='Only display detached disks', is_flag=True)
