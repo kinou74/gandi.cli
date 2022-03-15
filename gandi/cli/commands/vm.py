@@ -220,7 +220,7 @@ def delete(gandi, background, force, resource):
 @option('--datacenter', type=DATACENTER, default='FR-SD5',
         help='Datacenter where the VM will be spawned.')
 @option('--memory', type=click.INT, default=256,
-        help='Quantity of RAM in Megabytes to allocate.')
+        help='Quantity of RAM in Megabytes to allocate. Mimimum is 256.')
 @option('--cores', type=click.INT, default=1,
         help='Number of cpu.')
 @click.option('--ip-version', type=IntChoice(['4', '6']), default=None,
@@ -235,7 +235,9 @@ def delete(gandi, background, force, resource):
                    'and the created login.')
 @click.option('--hostname', default=None,
               help='Hostname of the VM, will be generated if not provided.')
-@option('--image', type=DISK_IMAGE, default='Debian 8',
+@click.option('--system-disk', default=None,
+              help='System disk name of the VM, will be generated if not provided.')
+@option('--image', type=DISK_IMAGE, default='Debian 10',
         help='Disk image used to boot the VM. A * prefix means the image is '
              'deprecated and will soon be unavailable.')
 @click.option('--run', default=None,
@@ -263,10 +265,10 @@ def delete(gandi, background, force, resource):
                    '(default=False).')
 @click.option('--gen-password', default=False, is_flag=True,
               help='Generate a random password to be set for the root '
-                   'account and the created login(default=False).')
+                   'account and the created login (default=False).')
 @pass_gandi
 def create(gandi, datacenter, memory, cores, ip_version, bandwidth, login,
-           password, hostname, image, run, background, sshkey, size, vlan, ip,
+           password, hostname, system_disk, image, run, background, sshkey, size, vlan, ip,
            script, script_args, ssh, gen_password):
     """Create a new virtual machine.
 
@@ -333,7 +335,7 @@ def create(gandi, datacenter, memory, cores, ip_version, bandwidth, login,
         gandi.echo('* No password supplied for vm (required to enable '
                    'emergency web console access).')
     result = gandi.iaas.create(datacenter, memory, cores, ip_version,
-                               bandwidth, login, pwd, hostname,
+                               bandwidth, login, pwd, hostname, system_disk,
                                image, run,
                                background,
                                sshkey, size, vlan, ip, script, script_args,

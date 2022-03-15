@@ -195,7 +195,7 @@ class Iaas(GandiModule, SshkeyHelper):
 
     @classmethod
     def create(cls, datacenter, memory, cores, ip_version, bandwidth,
-               login, password, hostname, image, run, background, sshkey,
+               login, password, hostname, system_disk, image, run, background, sshkey,
                size, vlan, ip, script, script_args, ssh):
         """Create a new virtual machine."""
         from gandi.cli.modules.network import Ip, Iface
@@ -208,7 +208,10 @@ class Iaas(GandiModule, SshkeyHelper):
             hostname = randomstring('vm')
             disk_name = 'sys_%s' % hostname[2:]
         else:
-            disk_name = 'sys_%s' % hostname.replace('.', '')
+            if not system_disk:
+                disk_name = 'sys_%s' % hostname.replace('.', '')
+            else:
+                disk_name = system_disk.replace('.', '')
 
         vm_params = {
             'hostname': hostname,
