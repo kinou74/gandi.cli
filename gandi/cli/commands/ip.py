@@ -22,19 +22,19 @@ def ip(gandi):
               help='Filter by datacenter.')
 @click.option('--type', default=None, type=IP_TYPE,
               help='Filter by type.')
-@click.option('--id', help='Display ids.', is_flag=True)
-@click.option('--attached', help='Only display attached ip.', is_flag=True)
-@click.option('--detached', help='Only display detached ip.', is_flag=True)
-@click.option('--version', help='Display ip version.', is_flag=True)
-@click.option('--reverse', help='Display ip reverse.', is_flag=True)
-@click.option('--vm', help='Display ip vm.', is_flag=True)
 @click.option('--vlan', default=None, help='Filter by vlan.')
+@click.option('--id', help='Display ids.', is_flag=True)
+@click.option('--attached', '--only-attached', help='Only display attached IPs.', is_flag=True)
+@click.option('--detached', '--only-detached', help='Only display detached IPs.', is_flag=True)
+@click.option('--version', help='Display IP version.', is_flag=True)
+@click.option('--reverse', help='Display IP reverse dns.', is_flag=True)
+@click.option('--vm', help='Display attached VM.', is_flag=True)
 @pass_gandi
 def list(gandi, datacenter, type, id, attached, detached, version, reverse,
          vm, vlan):
     """List ips."""
     if attached and detached:
-        gandi.echo("You can't set --attached and --detached at the same time.")
+        gandi.echo("You can't set --attached and --detached options at the same time.")
         return
 
     output_keys = ['ip', 'state', 'dc', 'type']
