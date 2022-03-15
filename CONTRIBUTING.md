@@ -54,9 +54,9 @@ Improvements to the Gandi CLI documentation are welcome.
     $ git clone <your fork>
     $ cd gandi.cli
     $ git checkout <name of your feature>
-    $ virtualenv .
-    $ source bin/activate
-    $ pip install .
+    $ mkvirtualenv -p <python exe> <name of you virtual env>
+    $ workon <name of you virtual env>
+    $ pip install -e <path of you gandi.cli project folder>
 
 Make your changes, test them, and submit a PR!
 
